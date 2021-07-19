@@ -13,4 +13,6 @@ class Renderer:
             if entity['id'] in self.entities:
                 self.game.screen.blit(entity['image'], (entity['position'][0]-self.game.camera.scroll[0], entity['position'][1]-self.game.camera.scroll[1]))
 
+        self.game.entity_manager.render()
+
         pygame.display.update()

@@ -9,8 +9,11 @@ class Event_Manager:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
-                    sys.exit()    
+                    sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.game.entity_manager.player.set_moving(True)
+            if event.type == pygame.MOUSEBUTTONUP:
+                self.game.entity_manager.player.set_moving(False)
