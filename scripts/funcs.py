@@ -1,4 +1,5 @@
 import pygame
+from .animation_handler import Animation_Data, Animation
 
 def load_images_from_spritesheet(filename):
     #Tries to load the file
@@ -47,3 +48,13 @@ def load_images_from_spritesheet(filename):
 #Returns the collision between two rects
 def rect_rect_collision(rect1, rect2):
     return rect1.colliderect(rect2)
+
+def create_new_animation(animation_data_path, images, loop, scale):
+    animation_data = Animation_Data(animation_data_path)
+    animation_data.images.clear()
+    animation_data.images.append(images)
+    animation_data.config['frames'] = [5 for _ in range(len(images))]
+    animation_data.config['loop'] = loop
+    animation_data.config['scale'] = scale
+    animation = Animation(animation_data)
+    return animation
