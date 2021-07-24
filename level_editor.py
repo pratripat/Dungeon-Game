@@ -6,5 +6,4 @@ def main():
     editor.load('data/levels/1.json')
     editor.main_loop()
 
-
 main()
