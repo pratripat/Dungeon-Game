@@ -1,0 +1,10 @@
+{
+  "sequential_commands": [
+    {
+      "function": "game_over_screen",
+      "args": [],
+      "timer": 1000
+    }
+  ],
+  "independent_commands": []
+}

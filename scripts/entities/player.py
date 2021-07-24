@@ -7,6 +7,7 @@ class Player(Entity):
         self.game = game
         self.target_position = self.position.copy()
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
+        self.moving = False
 
     def update(self):
         super().update(self.game.dt)
@@ -39,9 +40,13 @@ class Player(Entity):
         super().render(self.game.screen, self.game.camera.scroll)
 
     def move_dir(self, dir):
+        if self.moving:
+            return
+
         self.refresh()
 
         self.directions[dir] = True
+        self.moving = True
 
         if dir == 'up':
             self.target_position[1] -= self.game.tilemap.RES
@@ -52,6 +57,14 @@ class Player(Entity):
         if dir == 'right':
             self.target_position[0] += self.game.tilemap.RES
 
+        for id in self.game.entity_manager.colliding_entity_ids:
+            if len(self.game.tilemap.get_tiles_with_position(id, self.target_position)) > 0:
+                self.refresh()
+                break
+
+    def damage(self):
+        self.game.over = True            
+
     def refresh(self):
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
 
@@ -59,3 +72,5 @@ class Player(Entity):
         self.target_position[1] = self.rect[1] = self.rect[1]//self.game.tilemap.RES * self.game.tilemap.RES
 
         self.velocity = [0,0]
+
+        self.moving = False

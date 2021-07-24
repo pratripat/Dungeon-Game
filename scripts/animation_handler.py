@@ -25,7 +25,7 @@ class Animation_Data:
             print('could not sort the animation ->'+self.path)
 
         for path in paths:
-            image = pygame.image.load(path).convert()
+            image = pygame.image.load(path)
             image.set_colorkey(colorkey)
             self.images.append(image)
 

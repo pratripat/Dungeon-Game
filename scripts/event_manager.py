@@ -5,6 +5,9 @@ class Event_Manager:
         self.game = game
 
     def update(self):
+        if self.game.cutscene:
+            return
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

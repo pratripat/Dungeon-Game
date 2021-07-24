@@ -1,0 +1,10 @@
+{
+  "sequential_commands": [
+    {
+      "function": "game_begin_screen",
+      "args": [],
+      "timer": 1000
+    }
+  ],
+  "independent_commands": []
+}

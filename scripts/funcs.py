@@ -52,7 +52,7 @@ def rect_rect_collision(rect1, rect2):
 def create_new_animation(animation_data_path, images, loop, scale):
     animation_data = Animation_Data(animation_data_path)
     animation_data.images.clear()
-    animation_data.images.append(images)
+    animation_data.images.extend(images)
     animation_data.config['frames'] = [5 for _ in range(len(images))]
     animation_data.config['loop'] = loop
     animation_data.config['scale'] = scale
