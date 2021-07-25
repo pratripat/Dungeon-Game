@@ -2,10 +2,11 @@ import json, pygame
 from .camera import Camera
 from .tilemap import Tilemap
 from .renderer import Renderer
+from .cutscene import Cutscene
 from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
 from .animation_handler import Animation_Handler
-from .cutscene import Cutscene
+from .level_transition_rect import Level_Transition_Rect
 
 class Game:
     def __init__(self):
@@ -13,10 +14,9 @@ class Game:
         self.screen = pygame.display.set_mode(self.window_size, pygame.RESIZABLE+pygame.SCALED)
         self.clock = pygame.time.Clock()
 
-        self.screen.set_alpha(255)
-
         self.level = 0
         self.level_order = json.load(open('data/configs/levels/level_order.json', 'r'))
+        self.cutscene = None
 
         self.load_level()
 
@@ -25,13 +25,13 @@ class Game:
         self.event_manager = Event_Manager(self)
         self.animations = Animation_Handler()
         self.entity_manager = Entity_Manager(self)
+        self.level_transition_rect = Level_Transition_Rect(self)
 
         self.camera.set_target(self.entity_manager.player)
         self.camera.set_movement(0.05)
 
     def load_level(self):
         self.over = False
-        self.cutscene = None
         self.tilemap = Tilemap(self.level_order[self.level])
 
         try:
@@ -41,6 +41,8 @@ class Game:
             self.camera.set_movement(0.05)
         except:
             pass
+
+        self.load_cutscene('game_begin')
 
     def update(self):
         self.clock.tick()
@@ -70,14 +72,17 @@ class Game:
             self.cutscene = None
 
     def game_over_screen(self):
-        self.screen.set_alpha(self.screen.get_alpha()-1)
+        self.level_transition_rect.set_right()
+        self.level_transition_rect.move_rect_right()
 
     def game_begin_screen(self):
-        self.screen.set_alpha(self.screen.get_alpha()+1)
+        self.level_transition_rect.set_left()
+        self.level_transition_rect.move_rect_left()
 
     def load_cutscene(self, path, function=None, args=[]):
         data = json.load(open(f'data/cutscenes/{path}.json', 'r'))
         self.cutscene = Cutscene(self, data['sequential_commands'], data['independent_commands'], function, args)
+        self.over = False
 
     @property
     def dt(self):

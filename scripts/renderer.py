@@ -15,4 +15,6 @@ class Renderer:
 
         self.game.entity_manager.render()
 
+        self.game.level_transition_rect.render()
+
         pygame.display.update()
