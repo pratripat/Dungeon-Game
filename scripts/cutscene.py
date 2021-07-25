@@ -32,6 +32,9 @@ class Cutscene:
         if len(self.sequential_commands) == 0 and len(self.independent_commands) == 0:
             self.finished = True
 
+            if self.function:
+                self.function(*self.args)
+
 class Command:
     def __init__(self, game, function, args, timer):
         self.game = game

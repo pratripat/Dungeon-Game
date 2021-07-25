@@ -3,7 +3,7 @@
     {
       "function": "game_begin_screen",
       "args": [],
-      "timer": 1000
+      "timer": 100
     }
   ],
   "independent_commands": []
