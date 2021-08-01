@@ -45,7 +45,7 @@ class Game:
         self.load_cutscene('game_begin')
 
     def update(self):
-        self.clock.tick()
+        self.clock.tick(100)
 
         self.camera.update()
         self.update_cutscene()
