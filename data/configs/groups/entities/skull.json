@@ -1,0 +1,8 @@
+{
+  "id": "skull",
+  "filename": "data/graphics/spritesheet/entities.png",
+  "indexes": [2],
+  "resize": true,
+  "scale": 3,
+  "autotile_config": null
+}

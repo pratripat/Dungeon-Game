@@ -15,6 +15,8 @@ class Renderer:
 
         self.game.entity_manager.render()
 
+        self.game.entity_manager.player.health_bar.render(self.game.entity_manager.player.health*10)
+
         self.game.level_transition_rect.render()
 
         pygame.display.update()

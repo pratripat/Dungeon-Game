@@ -3,7 +3,8 @@ import pygame
 class Level_Transition_Rect:
     def __init__(self, game):
         self.game = game
-        self.color = (37, 19, 26)
+        # self.color = (37, 19, 26)
+        self.color = (0, 0, 0)
         self.rect = pygame.Rect(0, 0, self.game.screen.get_width()+10, self.game.screen.get_height())
         self.moving = False
 
