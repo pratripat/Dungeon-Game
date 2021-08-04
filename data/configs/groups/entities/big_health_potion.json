@@ -1,0 +1,8 @@
+{
+  "id": "big_health_potion",
+  "filename": "data/graphics/spritesheet/entities.png",
+  "indexes": [6],
+  "resize": true,
+  "scale": 3,
+  "autotile_config": null
+}

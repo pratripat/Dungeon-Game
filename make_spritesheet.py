@@ -4,7 +4,10 @@ images = [
     pygame.image.load('data/graphics/spritesheet/player.png'),
     pygame.image.load('data/graphics/spritesheet/coin.png'),
     pygame.image.load('data/graphics/spritesheet/skull.png'),
-    pygame.image.load('data/graphics/spritesheet/skeleton.png')
+    pygame.image.load('data/graphics/spritesheet/skeleton.png'),
+    pygame.image.load('data/graphics/spritesheet/vampire.png'),
+    pygame.image.load('data/graphics/spritesheet/small_health_potion.png'),
+    pygame.image.load('data/graphics/spritesheet/big_health_potion.png')
 ]
 
 surf = pygame.Surface((sum([image.get_width() for image in images])+(len(images)*2)+1, max([image.get_height() for image in images])+2))
