@@ -12,6 +12,8 @@ class Player(Entity):
         self.health = 5
         self.speed = 4
         self.invincible_timer = 0
+        self.bleeding_timer = 0
+        self.max_bleeding_timer = 500
         self.moving = False
         self.damaged = False
 
@@ -22,6 +24,10 @@ class Player(Entity):
 
         if self.invincible_timer > 0:
             self.invincible_timer -= 1
+
+        if self.bleeding_timer > 0:
+            self.bleeding_timer -= 1
+            self.damage()
 
     def movement(self):
         if not(any(self.directions)):
@@ -82,6 +88,9 @@ class Player(Entity):
 
         if self.health == 0:
             self.game.over = True
+
+    def bleed(self):
+        self.bleeding_timer = self.max_bleeding_timer
 
     def refresh(self):
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}

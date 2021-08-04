@@ -2,7 +2,9 @@ from .entities.player import Player
 from .entities.torch import Torch
 from .entities.spike import Spike
 from .entities.coin import Coin
+from .entities.vampire import Vampire
 from .entities.skeleton import Skeleton
+from .entities.health_potion import Health_Potion
 
 class Entity_Manager:
     def __init__(self, game):
@@ -16,6 +18,8 @@ class Entity_Manager:
         self.spikes = [Spike(self.game, rect) for rect in self.game.tilemap.get_rects_with_id('spikes')]
         self.coins = [Coin(self.game, rect) for rect in self.game.tilemap.get_rects_with_id('coin')]
         self.skeletons = [Skeleton(self.game, rect) for rect in self.game.tilemap.get_rects_with_id('skeleton')]
+        self.vampires = [Vampire(self.game, rect) for rect in self.game.tilemap.get_rects_with_id('vampire')]
+        self.health_potions = [Health_Potion(self.game, 'small_health_potion', rect) for rect in self.game.tilemap.get_rects_with_id('small_health_potion')]+[Health_Potion(self.game, 'big_health_potion', rect) for rect in self.game.tilemap.get_rects_with_id('big_health_potion')]
         self.skulls = []
 
     def update(self):
@@ -31,11 +35,11 @@ class Entity_Manager:
 
     @property
     def entities(self):
-        return [*self.spikes, self.player, *self.torches, *self.coins, *self.enemies]
+        return [*self.spikes, self.player, *self.torches, *self.coins, *self.enemies, *self.health_potions]
 
     @property
     def enemies(self):
-        return [*self.skeletons, *self.skulls]
+        return [*self.vampires, *self.skeletons, *self.skulls]
 
     @property
     def collidables(self):
