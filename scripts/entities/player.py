@@ -9,7 +9,7 @@ class Player(Entity):
         self.target_position = self.position.copy()
         self.health_bar = Health_Bar(self.game, [30, 30])
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
-        self.health = 5
+        self.health = self.max_health = 5
         self.speed = 4
         self.invincible_timer = 0
         self.bleeding_timer = 0
@@ -91,6 +91,15 @@ class Player(Entity):
 
     def bleed(self):
         self.bleeding_timer = self.max_bleeding_timer
+
+    def increment_health(self, extra_health):
+        self.health += extra_health
+
+        if self.health > self.max_health:
+            self.health = self.max_health
+
+    def increment_invincibility(self, extra_invincibility):
+        self.invincible_timer += extra_invincibility * 100
 
     def refresh(self):
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}

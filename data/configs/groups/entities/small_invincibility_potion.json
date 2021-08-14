@@ -1,0 +1,8 @@
+{
+  "id": "small_invincibility_potion",
+  "filename": "data/graphics/spritesheet/entities.png",
+  "indexes": [7],
+  "resize": true,
+  "scale": 3,
+  "autotile_config": null
+}
