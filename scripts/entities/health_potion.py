@@ -9,9 +9,9 @@ class Health_Potion(Potion):
 
     def interaction(self):
         if self.id == 'small_health_potion':
-            self.game.entity_manager.player.health += 1
+            self.game.entity_manager.player.increment_health(1)
 
         if self.id == 'big_health_potion':
-            self.game.entity_manager.player.health += 2
+            self.game.entity_manager.player.increment_health(2)
 
         self.game.entity_manager.health_potions.remove(self)
