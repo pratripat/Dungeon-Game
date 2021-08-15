@@ -49,6 +49,14 @@ def load_images_from_spritesheet(filename):
 def rect_rect_collision(rect1, rect2):
     return rect1.colliderect(rect2)
 
+def rect_position_collision(rect, position):
+    return (
+        position[0] >= rect[0] and
+        position[0] < rect[0]+rect[2] and
+        position[1] >= rect[1] and
+        position[1] < rect[1]+rect[3]
+    )
+
 def create_new_animation(animation_data_path, images, loop, scale):
     animation_data = Animation_Data(animation_data_path)
     animation_data.images.clear()
