@@ -1,7 +1,7 @@
 {
-  "id": "doors",
+  "id": "silver_door",
   "filename": "data/graphics/spritesheet/doors.png",
-  "indexes": [0, 1, 2],
+  "indexes": [0],
   "resize": true,
   "scale": 3,
   "autotile_config": null

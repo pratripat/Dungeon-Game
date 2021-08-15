@@ -15,8 +15,13 @@ class Renderer:
 
         self.game.entity_manager.render()
 
+        for rect in self.game.entity_manager.collidables:
+            pygame.draw.rect(self.game.screen, (255,0,0), (rect[0]-self.game.camera.scroll[0], rect[1]-self.game.camera.scroll[1], rect[2], rect[3]))
+
         self.game.entity_manager.player.health_bar.render(self.game.entity_manager.player.health*10)
 
         self.game.level_transition_rect.render()
+
+        self.game.font.render(self.game.screen, str(self.game.dt*10000), [10, 200])
 
         pygame.display.update()

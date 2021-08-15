@@ -7,6 +7,7 @@ from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
 from .animation_handler import Animation_Handler
 from .level_transition_rect import Level_Transition_Rect
+from .font import Font
 
 class Game:
     def __init__(self):
@@ -25,6 +26,7 @@ class Game:
         self.event_manager = Event_Manager(self)
         self.animations = Animation_Handler()
         self.entity_manager = Entity_Manager(self)
+        self.font = Font('data/graphics/spritesheet/font.png')
         self.level_transition_rect = Level_Transition_Rect(self)
 
         self.camera.set_target(self.entity_manager.player)

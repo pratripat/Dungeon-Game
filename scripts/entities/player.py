@@ -1,4 +1,5 @@
 import pygame
+from ..funcs import *
 from ..entity import Entity
 from ..health_bar import Health_Bar
 
@@ -28,6 +29,8 @@ class Player(Entity):
         if self.bleeding_timer > 0:
             self.bleeding_timer -= 1
             self.damage()
+
+        print(self.moving)
 
     def movement(self):
         if not(any(self.directions)):
@@ -72,8 +75,12 @@ class Player(Entity):
         if dir == 'right':
             self.target_position[0] += self.game.tilemap.RES
 
-        for id in self.game.entity_manager.colliding_entity_ids:
-            if len(self.game.tilemap.get_tiles_with_position(id, self.target_position)) > 0:
+        # for id in self.game.entity_manager.colliding_entity_ids:
+        #     if len(self.game.tilemap.get_tiles_with_position(id, self.target_position)) > 0:
+        #         self.refresh()
+        #         break
+        for rect in self.game.entity_manager.collidables:
+            if rect_position_collision(rect, self.target_position):
                 self.refresh()
                 break
 

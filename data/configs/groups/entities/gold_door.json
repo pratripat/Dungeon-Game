@@ -1,0 +1,8 @@
+{
+  "id": "gold_door",
+  "filename": "data/graphics/spritesheet/doors.png",
+  "indexes": [1],
+  "resize": true,
+  "scale": 3,
+  "autotile_config": null
+}
