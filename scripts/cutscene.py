@@ -33,6 +33,7 @@ class Cutscene:
             self.finished = True
 
             if self.function:
+                print(self.function, self.args)
                 self.function(*self.args)
 
 class Command:
