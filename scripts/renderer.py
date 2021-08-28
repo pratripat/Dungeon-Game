@@ -3,7 +3,7 @@ import pygame
 class Renderer:
     def __init__(self, game):
         self.game = game
-        self.entities = ['walls', 'tiles', 'decorations']
+        self.entities = ['walls', 'tiles', 'decorations', 'end_tile']
         self.background_color = (37, 19, 26)
 
     def render(self):
@@ -14,11 +14,10 @@ class Renderer:
                 self.game.screen.blit(entity['image'], (entity['position'][0]-self.game.camera.scroll[0], entity['position'][1]-self.game.camera.scroll[1]))
 
         self.game.entity_manager.render()
+        self.game.timer.render()
 
-        for rect in self.game.entity_manager.collidables:
-            pygame.draw.rect(self.game.screen, (255,0,0), (rect[0]-self.game.camera.scroll[0], rect[1]-self.game.camera.scroll[1], rect[2], rect[3]))
-
-        self.game.entity_manager.player.health_bar.render(self.game.entity_manager.player.health*10)
+        # for rect in self.game.entity_manager.collidables:
+        #     pygame.draw.rect(self.game.screen, (255,0,0), (rect[0]-self.game.camera.scroll[0], rect[1]-self.game.camera.scroll[1], rect[2], rect[3]))
 
         self.game.level_transition_rect.render()
 

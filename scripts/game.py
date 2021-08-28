@@ -1,4 +1,6 @@
 import json, pygame
+from .font import Font
+from .timer import Timer
 from .camera import Camera
 from .tilemap import Tilemap
 from .renderer import Renderer
@@ -7,7 +9,6 @@ from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
 from .animation_handler import Animation_Handler
 from .level_transition_rect import Level_Transition_Rect
-from .font import Font
 
 class Game:
     def __init__(self):
@@ -34,6 +35,7 @@ class Game:
 
     def load_level(self):
         self.over = False
+        self.timer = Timer(self)
         self.tilemap = Tilemap(self.level_order[self.level])
 
         try:
@@ -53,6 +55,9 @@ class Game:
         self.update_cutscene()
         self.event_manager.update()
         self.entity_manager.update()
+
+        if not self.entity_manager.player.dead:
+            self.timer.update()
 
         if self.over:
             self.load_cutscene('game_over', self.load_level)

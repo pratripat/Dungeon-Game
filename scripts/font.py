@@ -4,7 +4,7 @@ from .funcs import *
 class Font:
     def __init__(self, filename):
         self.filename = filename
-        self.characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@!-*.'
+        self.characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@!-*.:'
         self.space_width = 10
         self.load_characters()
 

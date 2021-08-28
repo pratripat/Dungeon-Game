@@ -17,6 +17,7 @@ class Player(Entity):
         self.max_bleeding_timer = 500
         self.moving = False
         self.damaged = False
+        self.items = {}
 
     def update(self):
         super().update(self.game.dt)
@@ -29,8 +30,6 @@ class Player(Entity):
         if self.bleeding_timer > 0:
             self.bleeding_timer -= 1
             self.damage()
-
-        print(self.moving)
 
     def movement(self):
         if not(any(self.directions)):
@@ -57,6 +56,11 @@ class Player(Entity):
     def render(self):
         super().render(self.game.screen, self.game.camera.scroll)
 
+        self.health_bar.render(self.health*10)
+
+        for i, image in enumerate(self.items.values()):
+            self.game.screen.blit(image, (i*(image.get_width()+20), 10))
+
     def move_dir(self, dir):
         if self.moving:
             return
@@ -75,20 +79,16 @@ class Player(Entity):
         if dir == 'right':
             self.target_position[0] += self.game.tilemap.RES
 
-        # for id in self.game.entity_manager.colliding_entity_ids:
-        #     if len(self.game.tilemap.get_tiles_with_position(id, self.target_position)) > 0:
-        #         self.refresh()
-        #         break
         for rect in self.game.entity_manager.collidables:
             if rect_position_collision(rect, self.target_position):
                 self.refresh()
                 break
 
-    def damage(self):
+    def damage(self, value=1):
         if self.invincible_timer > 0:
             return
 
-        self.health -= 1
+        self.health -= value
 
         self.damaged = True
         self.invincible_timer = 200
@@ -117,3 +117,7 @@ class Player(Entity):
         self.velocity = [0,0]
 
         self.moving = False
+
+    @property
+    def dead(self):
+        return self.health <= 0
