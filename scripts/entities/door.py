@@ -1,3 +1,4 @@
+import pygame
 from ..funcs import *
 
 class Door:
@@ -17,7 +18,8 @@ class Door:
 
         #If player is near the door (in specific rect), then remove door
         if id in self.game.entity_manager.player.items.keys():
-            if self.game.entity_manager.player.rect[1] in [self.rect[1]-self.rect[3], self.rect[1]+self.rect[3]] and self.game.entity_manager.player.rect[0] in [self.rect[0], self.rect[0]+self.rect[2]//2]:
+            if any([rect_rect_collision(self.game.entity_manager.player.rect, pygame.Rect(self.rect[0], self.rect[1]-self.rect[3], self.rect[2], self.rect[3]*3))]):
+            # if self.game.entity_manager.player.rect[1] in [self.rect[1]-self.rect[3], self.rect[1]+self.rect[3]] and self.game.entity_manager.player.rect[0] in [self.rect[0], self.rect[0]+self.rect[2]//2]:
                 self.game.entity_manager.doors.remove(self)
                 del self.game.entity_manager.player.items[id]
 
