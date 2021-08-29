@@ -9,6 +9,7 @@ class Skeleton(Enemy):
     def update(self):
         super().update()
 
+        #Adds flying skull in every direction periodically
         self.timer -= self.game.dt
 
         if self.timer <= 0:

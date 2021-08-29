@@ -8,6 +8,7 @@ class Health_Potion(Potion):
         super().update(self.interaction)
 
     def interaction(self):
+        #Increments player health when player touches the potion
         if self.id == 'small_health_potion':
             self.game.entity_manager.player.increment_health(1)
 

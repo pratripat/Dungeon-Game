@@ -6,9 +6,11 @@ class End_Tile:
         self.rect = rect
         self.id = 'end_tile'
 
+    #Rendering is already handled by the renderer
     def render(self):
         pass
 
+    #Load next level when player interacts with end tile
     def update(self):
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.level += 1

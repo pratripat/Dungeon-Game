@@ -10,11 +10,14 @@ class Skull(Enemy):
     def update(self):
         super().update()
 
+        #Remove when asked to
         if self.remove:
             self.game.entity_manager.skulls.remove(self)
 
+        #Move
         self.rect[0] += self.velocity[0]
         self.rect[1] += self.velocity[1]
 
+        #Damage player
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.remove = True

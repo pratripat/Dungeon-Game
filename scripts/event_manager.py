@@ -5,17 +5,22 @@ class Event_Manager:
         self.game = game
 
     def update(self):
+        #Return if cutscene is being played currently
         if self.game.cutscene:
             return
 
         for event in pygame.event.get():
+            #Quiting when the exit button is clicked
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+                #Quiting when the escape button is clicked
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+
+                #Moving player when arrow keys or wasd keys are pressed    
                 if event.key in [pygame.K_w, pygame.K_UP]:
                     self.game.entity_manager.player.move_dir('up')
                 elif event.key in [pygame.K_a, pygame.K_LEFT]:

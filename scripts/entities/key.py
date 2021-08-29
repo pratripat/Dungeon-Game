@@ -13,6 +13,7 @@ class Key:
     def update(self):
         self.animation.run(self.game.dt)
 
+        #Add key item to player items when player touches the key
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             image = self.animation.animation_data.images[0]
             scale = self.animation.animation_data.config['scale']

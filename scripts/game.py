@@ -22,6 +22,7 @@ class Game:
 
         self.load_level()
 
+        #All important objects
         self.camera = Camera(self)
         self.renderer = Renderer(self)
         self.event_manager = Event_Manager(self)
@@ -30,6 +31,7 @@ class Game:
         self.font = Font('data/graphics/spritesheet/font.png')
         self.level_transition_rect = Level_Transition_Rect(self)
 
+        #Sets player as the target
         self.camera.set_target(self.entity_manager.player)
         self.camera.set_movement(0.05)
 
@@ -46,11 +48,14 @@ class Game:
         except:
             pass
 
+        #First cutscene (black rect moving)
         self.load_cutscene('game_begin')
 
     def update(self):
+        #Fps
         self.clock.tick(100)
 
+        #Updating the objects
         self.camera.update()
         self.update_cutscene()
         self.event_manager.update()
@@ -71,6 +76,7 @@ class Game:
             self.render()
 
     def update_cutscene(self):
+        #Update cutscene is it is playing (or return)
         if not self.cutscene:
             return
 

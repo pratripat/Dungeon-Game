@@ -11,5 +11,6 @@ class Health_Bar:
         self.image.set_colorkey((0, 0, 0))
 
     def render(self, health):
+        #Rendering of health bar image and health in the form of a rect
         pygame.draw.rect(self.game.screen, self.color, (self.position[0]+self.scale, self.position[1], health*self.scale, self.image.get_height()))
         self.game.screen.blit(self.image, self.position)

@@ -15,5 +15,6 @@ class Spike:
         if 30 < self.animation.frame < 71:
             return
 
+        #When spike if out and player is at the same position as spike, damage player
         if self.game.entity_manager.player.position == self.position:
             self.game.entity_manager.player.damage()

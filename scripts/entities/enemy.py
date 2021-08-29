@@ -13,5 +13,6 @@ class Enemy(Entity):
     def update(self):
         super().update(self.game.dt)
 
+        #Damages player when player touches enemy
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.entity_manager.player.damage()
