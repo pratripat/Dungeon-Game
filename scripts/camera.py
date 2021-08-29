@@ -13,6 +13,7 @@ class Camera:
         if self.time == 0:
             self.screen_shake = 0
 
+        #Moves camera towards target
         if self.target:
             self.scroll[0] += int((self.target.center[0]-self.scroll[0]-self.game.screen.get_width()/2) * self.movement + random.uniform(-self.screen_shake, self.screen_shake+1))
             self.scroll[1] += int((self.target.center[1]-self.scroll[1]-self.game.screen.get_width()/2) * self.movement + random.uniform(-self.screen_shake, self.screen_shake+1))
@@ -20,6 +21,7 @@ class Camera:
         if self.time > 0:
             self.time -= 1
 
+        #Keeps camera within the tilemap constraints
         if tilemap:
             if self.scroll[0] > right-self.game.screen.get_width():
                 self.scroll[0] = right-self.game.screen.get_width()

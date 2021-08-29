@@ -12,5 +12,6 @@ class Potion(Entity):
     def update(self, function):
         super().update(self.game.dt)
 
+        #Performs given function when player touches the potion
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             function()

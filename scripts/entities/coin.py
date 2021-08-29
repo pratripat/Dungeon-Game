@@ -12,5 +12,6 @@ class Coin(Entity):
     def update(self):
         super().update(self.game.dt)
 
+        #Add coin to player and remove itself
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.entity_manager.coins.remove(self)

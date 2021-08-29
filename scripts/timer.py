@@ -3,6 +3,7 @@ class Timer:
         self.game = game
         self.time = 61
 
+    #Renders time left before player dies
     def render(self):
         if self.time > 60:
             time = f'{int(self.time)//60:02d}:{int(self.time-60):02d}'
@@ -11,6 +12,7 @@ class Timer:
 
         self.game.font.render(self.game.screen, time, [self.game.screen.get_width()-150, 30], scale=3)
 
+    #Decrements timers by one every second
     def update(self):
         self.time -= self.game.dt
 

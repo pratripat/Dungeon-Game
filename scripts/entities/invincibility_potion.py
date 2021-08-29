@@ -8,6 +8,7 @@ class Invincibility_Potion(Potion):
         super().update(self.interaction)
 
     def interaction(self):
+        #Increments player invincibility when player touches the potion
         if self.id == 'small_invincibility_potion':
             self.game.entity_manager.player.increment_invincibility(5)
 

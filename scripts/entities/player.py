@@ -21,9 +21,12 @@ class Player(Entity):
 
     def update(self):
         super().update(self.game.dt)
+
+        #Movement
         self.movement()
         self.move(self.game.entity_manager.collidables, self.game.dt)
 
+        #Timers
         if self.invincible_timer > 0:
             self.invincible_timer -= 1
 
@@ -32,12 +35,16 @@ class Player(Entity):
             self.damage()
 
     def movement(self):
-        if not(any(self.directions)):
+        #Return if not moving
+        if not any(self.directions):
             return
 
+        #Stop moving if we have reached target position
         if self.position == self.target_position:
             self.refresh()
+            return
 
+        #Add velocity according to direction
         if self.directions['up']:
             self.velocity[1] -= 0.5
             self.velocity[1] = max(-self.speed, self.velocity[1])
@@ -56,12 +63,15 @@ class Player(Entity):
     def render(self):
         super().render(self.game.screen, self.game.camera.scroll)
 
+        #Render health bar
         self.health_bar.render(self.health*10)
 
+        #Render items
         for i, image in enumerate(self.items.values()):
             self.game.screen.blit(image, (i*(image.get_width()+20), 10))
 
     def move_dir(self, dir):
+        #Return if already moving
         if self.moving:
             return
 
@@ -70,6 +80,7 @@ class Player(Entity):
         self.directions[dir] = True
         self.moving = True
 
+        #Set target position
         if dir == 'up':
             self.target_position[1] -= self.game.tilemap.RES
         if dir == 'down':
@@ -79,12 +90,14 @@ class Player(Entity):
         if dir == 'right':
             self.target_position[0] += self.game.tilemap.RES
 
+        #If player tries to move to wall, then refresh
         for rect in self.game.entity_manager.collidables:
             if rect_position_collision(rect, self.target_position):
                 self.refresh()
                 break
 
     def damage(self, value=1):
+        #Return if invincible
         if self.invincible_timer > 0:
             return
 
@@ -93,6 +106,7 @@ class Player(Entity):
         self.damaged = True
         self.invincible_timer = 200
 
+        #Game over if health is 0
         if self.health == 0:
             self.game.over = True
 
@@ -109,6 +123,7 @@ class Player(Entity):
         self.invincible_timer += extra_invincibility * 100
 
     def refresh(self):
+        #Movement direction are refreshed
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
 
         self.target_position[0] = self.rect[0] = self.rect[0]//self.game.tilemap.RES * self.game.tilemap.RES

@@ -12,8 +12,10 @@ class Door:
         self.game.screen.blit(self.image, (self.rect[0]-self.game.camera.scroll[0], self.rect[1]-self.game.camera.scroll[1]))
 
     def update(self):
+        #Get key id
         id = self.id.split('_')[0]+'_key'
 
+        #If player is near the door (in specific rect), then remove door
         if id in self.game.entity_manager.player.items.keys():
             if self.game.entity_manager.player.rect[1] in [self.rect[1]-self.rect[3], self.rect[1]+self.rect[3]] and self.game.entity_manager.player.rect[0] in [self.rect[0], self.rect[0]+self.rect[2]//2]:
                 self.game.entity_manager.doors.remove(self)

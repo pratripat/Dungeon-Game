@@ -30,24 +30,30 @@ class Entity_Manager:
         self.skulls = []
 
     def update(self):
+        #Return if cutscene is being played currently
         if self.game.cutscene:
             return
 
+        #Updating all the entities
         for entity in self.entities:
             entity.update()
 
     def render(self):
+        #Rendering all the entities
         for entity in self.entities:
             entity.render()
 
+    #Returns a list of all entities
     @property
     def entities(self):
         return [*self.spikes, self.player, *self.torches, *self.coins, *self.enemies, *self.health_potions, *self.invincibility_potions, *self.doors, *self.keys]
 
+    #Returns a list of all enemies
     @property
     def enemies(self):
         return [*self.vampires, *self.skeletons, *self.skulls]
 
+    #Returns a list of all tiles that player cannot go through
     @property
     def collidables(self):
         collidables = []

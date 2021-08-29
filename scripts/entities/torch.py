@@ -8,6 +8,7 @@ class Torch:
         self.load_animation()
 
     def load_animation(self):
+        #Loads appropriate animation according to the index in spritesheet
         if self.index == 6:
             self.animation = self.game.animations.get_animation('torch_1')
         elif self.index == 7:

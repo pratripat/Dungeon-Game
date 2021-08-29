@@ -8,5 +8,6 @@ class Vampire(Enemy):
     def update(self):
         super().update()
 
+        #Makes player bleed on every touch
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.entity_manager.player.bleed()
