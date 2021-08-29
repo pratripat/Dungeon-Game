@@ -39,11 +39,6 @@ class Player(Entity):
         if not any(self.directions):
             return
 
-        #Stop moving if we have reached target position
-        if self.position == self.target_position:
-            self.refresh()
-            return
-
         #Add velocity according to direction
         if self.directions['up']:
             self.velocity[1] -= 0.5
@@ -75,25 +70,13 @@ class Player(Entity):
         if self.moving:
             return
 
-        self.refresh()
-
         self.directions[dir] = True
         self.moving = True
-
-        #Set target position
-        if dir == 'up':
-            self.target_position[1] -= self.game.tilemap.RES
-        if dir == 'down':
-            self.target_position[1] += self.game.tilemap.RES
-        if dir == 'left':
-            self.target_position[0] -= self.game.tilemap.RES
-        if dir == 'right':
-            self.target_position[0] += self.game.tilemap.RES
 
         #If player tries to move to wall, then refresh
         for rect in self.game.entity_manager.collidables:
             if rect_position_collision(rect, self.target_position):
-                self.refresh()
+                self.refresh_dir(dir)
                 break
 
     def damage(self, value=1):
@@ -122,12 +105,9 @@ class Player(Entity):
     def increment_invincibility(self, extra_invincibility):
         self.invincible_timer += extra_invincibility * 100
 
-    def refresh(self):
+    def refresh_dir(self, dir):
         #Movement direction are refreshed
-        self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
-
-        self.target_position[0] = self.rect[0] = self.rect[0]//self.game.tilemap.RES * self.game.tilemap.RES
-        self.target_position[1] = self.rect[1] = self.rect[1]//self.game.tilemap.RES * self.game.tilemap.RES
+        self.directions[dir] = False
 
         self.velocity = [0,0]
 

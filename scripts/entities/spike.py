@@ -1,3 +1,6 @@
+import pygame
+from ..funcs import *
+
 class Spike:
     def __init__(self, game, rect):
         self.game = game
@@ -9,12 +12,13 @@ class Spike:
 
     def update(self):
         self.animation.run(self.game.dt)
-        self.damage_player()
+        self.damage_entity()
 
-    def damage_player(self):
+    def damage_entity(self):
         if 30 < self.animation.frame < 71:
             return
 
         #When spike if out and player is at the same position as spike, damage player
-        if self.game.entity_manager.player.position == self.position:
-            self.game.entity_manager.player.damage()
+        for entity in [self.game.entity_manager.player, *self.game.entity_manager.enemies]:
+            if rect_rect_collision(entity.rect, pygame.Rect(*self.position, self.game.tilemap.RES, self.game.tilemap.RES)):
+                entity.damage()

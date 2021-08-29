@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 from .animation_handler import Animation_Data, Animation
 
 def load_images_from_spritesheet(filename):
@@ -56,6 +56,14 @@ def rect_position_collision(rect, position):
         position[1] >= rect[1] and
         position[1] < rect[1]+rect[3]
     )
+
+def normalize_vector(vector, max_speed=1):
+    magnitude = math.sqrt(vector[0]**2+vector[1]**2)
+
+    if magnitude > 0:
+        return [vector[0]/magnitude * max_speed, vector[1]/magnitude * max_speed]
+
+    return [0, 0]
 
 def create_new_animation(animation_data_path, images, loop, scale):
     animation_data = Animation_Data(animation_data_path)
