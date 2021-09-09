@@ -23,14 +23,14 @@ class Camera:
 
         #Keeps camera within the tilemap constraints
         if tilemap:
-            if self.scroll[0] > right-self.game.screen.get_width():
-                self.scroll[0] = right-self.game.screen.get_width()
+            if self.scroll[0] > tilemap.right-self.game.screen.get_width()+tilemap.RES:
+                self.scroll[0] = tilemap.right-self.game.screen.get_width()+tilemap.RES
             if self.scroll[0] < tilemap.left:
                 self.scroll[0] = tilemap.left
             if self.scroll[1] < tilemap.top:
                 self.scroll[1] = tilemap.top
-            if self.scroll[1] > tilemap.bottom-self.game.screen.get_height():
-                self.scroll[1] = tilemap.bottom-self.game.screen.get_height()
+            if self.scroll[1] > tilemap.bottom-self.game.screen.get_height()+tilemap.RES:
+                self.scroll[1] = tilemap.bottom-self.game.screen.get_height()+tilemap.RES
 
     def set_target(self, target):
         self.target = target

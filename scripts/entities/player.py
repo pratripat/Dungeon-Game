@@ -11,6 +11,7 @@ class Player(Entity):
         self.health_bar = Health_Bar(self.game, [30, 30])
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
         self.health = self.max_health = 5
+        self.coins = 0
         self.speed = 4
         self.invincible_timer = 0
         self.bleeding_timer = 0
@@ -39,6 +40,9 @@ class Player(Entity):
         if not any(self.directions):
             return
 
+        if self.position == self.target_position:
+            self.refresh()
+
         #Add velocity according to direction
         if self.directions['up']:
             self.velocity[1] -= 0.5
@@ -58,26 +62,38 @@ class Player(Entity):
     def render(self):
         super().render(self.game.screen, self.game.camera.scroll)
 
-        #Render health bar
-        self.health_bar.render(self.health*10)
-
-        #Render items
-        for i, image in enumerate(self.items.values()):
-            self.game.screen.blit(image, (i*(image.get_width()+20), 10))
-
     def move_dir(self, dir):
-        #Return if already moving
         if self.moving:
             return
+
+        self.refresh()
 
         self.directions[dir] = True
         self.moving = True
 
-        #If player tries to move to wall, then refresh
-        for rect in self.game.entity_manager.collidables:
-            if rect_position_collision(rect, self.target_position):
-                self.refresh_dir(dir)
+        if dir == 'up':
+            self.target_position[1] -= self.game.tilemap.RES
+        if dir == 'down':
+            self.target_position[1] += self.game.tilemap.RES
+        if dir == 'left':
+            self.target_position[0] -= self.game.tilemap.RES
+        if dir == 'right':
+            self.target_position[0] += self.game.tilemap.RES
+
+        for id in self.game.entity_manager.colliding_entity_ids:
+            if len(self.game.tilemap.get_tiles_with_position(id, self.target_position)) > 0:
+                self.refresh()
                 break
+
+    def refresh(self):
+        self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
+
+        self.target_position[0] = self.rect[0] = self.rect[0]//self.game.tilemap.RES * self.game.tilemap.RES
+        self.target_position[1] = self.rect[1] = self.rect[1]//self.game.tilemap.RES * self.game.tilemap.RES
+
+        self.velocity = [0,0]
+
+        self.moving = False
 
     def damage(self, value=1):
         #Return if invincible
@@ -88,10 +104,6 @@ class Player(Entity):
 
         self.damaged = True
         self.invincible_timer = 200
-
-        #Game over if health is 0
-        if self.health == 0:
-            self.game.over = True
 
     def bleed(self):
         self.bleeding_timer = self.max_bleeding_timer
@@ -105,13 +117,8 @@ class Player(Entity):
     def increment_invincibility(self, extra_invincibility):
         self.invincible_timer += extra_invincibility * 100
 
-    def refresh_dir(self, dir):
-        #Movement direction are refreshed
-        self.directions[dir] = False
-
-        self.velocity = [0,0]
-
-        self.moving = False
+    def instant_kill(self):
+        self.health = 0
 
     @property
     def dead(self):

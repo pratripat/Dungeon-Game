@@ -17,7 +17,7 @@ class Enemy(Entity):
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.entity_manager.player.damage()
 
-    def damage(self):
+    def instant_kill(self):
         if self.id == 'skeleton':
             self.game.entity_manager.skeletons.remove(self)
         if self.id == 'vampire':
