@@ -5,6 +5,8 @@ from .camera import Camera
 from .tilemap import Tilemap
 from .renderer import Renderer
 from .cutscene import Cutscene
+from .pause_menu import Pause_Menu
+from .pause_button import Pause_Button
 from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
 from .animation_handler import Animation_Handler
@@ -30,6 +32,8 @@ class Game:
         self.entity_manager = Entity_Manager(self)
         self.font = Font('data/graphics/spritesheet/font.png')
         self.level_transition_rect = Level_Transition_Rect(self)
+        self.pause_menu = Pause_Menu(self)
+        self.pause_button = Pause_Button(self)
 
         #Sets player as the target
         self.camera.set_target(self.entity_manager.player)
@@ -41,6 +45,7 @@ class Game:
         self.tilemap = Tilemap(self.level_order[self.level])
 
         try:
+            self.pause_menu.refresh()
             self.entity_manager.load_entities()
 
             self.camera.set_target(self.entity_manager.player)
@@ -50,16 +55,18 @@ class Game:
 
         #First cutscene (black rect moving)
         self.load_cutscene('game_begin')
+        pygame.event.clear()
 
     def update(self):
         #Fps
         self.clock.tick(100)
 
         #Updating the objects
-        self.camera.update()
+        self.camera.update(self.tilemap)
         self.update_cutscene()
         self.event_manager.update()
         self.entity_manager.update()
+        self.pause_button.update()
 
         if not self.entity_manager.player.dead:
             self.timer.update()

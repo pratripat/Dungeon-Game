@@ -38,6 +38,9 @@ class Entity_Manager:
         for entity in self.entities:
             entity.update()
 
+        if self.player.dead:
+            self.game.over = True    
+
     def render(self):
         #Rendering all the entities
         for entity in self.entities:

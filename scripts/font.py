@@ -82,3 +82,32 @@ class Font:
         screen.blit(surface, position)
 
         return position
+
+    def get_text_surface(self, text, center=(False, False), scale=1, color=None, background_color=None):
+        text = text.upper()
+        surface = self.get_surface(text)
+        surface = pygame.transform.scale(surface, (round(surface.get_width()*scale), round(surface.get_height()*scale)))
+        temp_pos = [0,0]
+
+        if background_color:
+            background = pygame.Surface(surface.get_size())
+            background.fill(background_color)
+            surface.blit(background, (0,0))
+
+        for chr in text:
+            if chr in self.characters:
+                index = self.characters.index(chr)
+                image = self.images[index]
+                image = pygame.transform.scale(image, (round(image.get_width()*scale), round(image.get_height()*scale)))
+
+                surface.blit(image, temp_pos)
+
+                temp_pos[0] += image.get_width()
+            elif chr == ' ':
+                temp_pos[0] += self.space_width
+
+        if color:
+            surface = self.change_color(surface, (252,252,252), color)
+            surface.set_colorkey((0,0,0))
+
+        return surface

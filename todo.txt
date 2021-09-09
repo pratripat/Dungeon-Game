@@ -1,0 +1,7 @@
+ui          -  [ ]
+pause menu  -  [ ]
+main menu   -  [ ]
+sfx         -  [ ]
+music       -  [ ]
+levels      -  [ ]
+bugs        -  [ ]

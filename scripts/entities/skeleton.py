@@ -10,6 +10,9 @@ class Skeleton(Enemy):
         super().update()
 
         #Adds flying skull in every direction periodically
+        if not self.on_screen:
+            return
+            
         self.timer -= self.game.dt
 
         if self.timer <= 0:
@@ -18,3 +21,12 @@ class Skeleton(Enemy):
                 self.game.entity_manager.skulls.append(skull)
 
             self.timer = self.max_timer
+
+    @property
+    def on_screen(self):
+        return not (
+            self.rect[0] - self.game.camera.scroll[0] < 0 or
+            self.rect[0] + self.rect[2] - self.game.camera.scroll[0] > self.game.screen.get_width() or
+            self.rect[1] - self.game.camera.scroll[1] < 0 or
+            self.rect[1] + self.rect[3] - self.game.camera.scroll[1] > self.game.screen.get_height()
+        )

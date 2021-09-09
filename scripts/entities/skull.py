@@ -15,8 +15,10 @@ class Skull(Enemy):
             self.game.entity_manager.skulls.remove(self)
 
         #Move
-        self.rect[0] += self.velocity[0]
-        self.rect[1] += self.velocity[1]
+        self.move(self.game.entity_manager.collidables, self.game.dt)
+
+        if any(self.collisions.values()):
+            self.remove = True
 
         #Damage player
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):

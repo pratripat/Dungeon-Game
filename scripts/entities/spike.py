@@ -21,4 +21,4 @@ class Spike:
         #When spike if out and player is at the same position as spike, damage player
         for entity in [self.game.entity_manager.player, *self.game.entity_manager.enemies]:
             if rect_rect_collision(entity.rect, pygame.Rect(*self.position, self.game.tilemap.RES, self.game.tilemap.RES)):
-                entity.damage()
+                entity.instant_kill()

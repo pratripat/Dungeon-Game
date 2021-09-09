@@ -15,6 +15,9 @@ class Vampire(Enemy):
             self.game.entity_manager.player.bleed()
 
     def move_towards(self):
+        if not self.on_screen:
+            return
+
         distance = (self.game.entity_manager.player.rect[0]-self.rect[0])**2 + (self.game.entity_manager.player.rect[1]-self.rect[1])**2
         if distance < (self.game.tilemap.RES*4)**2:
             self.velocity = [self.game.entity_manager.player.rect[0]-self.rect[0], self.game.entity_manager.player.rect[1]-self.rect[1]]
@@ -23,3 +26,12 @@ class Vampire(Enemy):
             self.velocity = [0, 0]
 
         self.move(self.game.entity_manager.collidables, self.game.dt)
+
+    @property
+    def on_screen(self):
+        return not (
+            self.rect[0] - self.game.camera.scroll[0] < 0 or
+            self.rect[0] + self.rect[2] - self.game.camera.scroll[0] > self.game.screen.get_width() or
+            self.rect[1] - self.game.camera.scroll[1] < 0 or
+            self.rect[1] + self.rect[3] - self.game.camera.scroll[1] > self.game.screen.get_height()
+        )
