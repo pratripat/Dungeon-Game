@@ -74,3 +74,13 @@ def create_new_animation(animation_data_path, images, loop, scale):
     animation_data.config['scale'] = scale
     animation = Animation(animation_data)
     return animation
+
+def load_image(filename, scale, colorkey=(0,0,0)):
+    try:
+        image = pygame.image.load(filename)
+        image = pygame.transform.scale(image, (image.get_width()*scale, image.get_height()*scale))
+        image.set_colorkey(colorkey)
+        return image
+    except:
+        print(filename, ' not found...')
+        return pygame.Surface((1,1))

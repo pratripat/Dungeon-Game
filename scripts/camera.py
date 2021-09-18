@@ -26,7 +26,10 @@ class Camera:
             if self.scroll[0] > tilemap.right-self.game.screen.get_width()+tilemap.RES:
                 self.scroll[0] = tilemap.right-self.game.screen.get_width()+tilemap.RES
             if self.scroll[0] < tilemap.left:
-                self.scroll[0] = tilemap.left
+                if tilemap.right-tilemap.left > self.game.screen.get_width():
+                    self.scroll[0] = tilemap.left
+                else:
+                    self.scroll[0] = self.target.center[0]-self.game.screen.get_width()/2
             if self.scroll[1] < tilemap.top:
                 self.scroll[1] = tilemap.top
             if self.scroll[1] > tilemap.bottom-self.game.screen.get_height()+tilemap.RES:

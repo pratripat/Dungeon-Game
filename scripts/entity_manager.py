@@ -39,7 +39,7 @@ class Entity_Manager:
             entity.update()
 
         if self.player.dead:
-            self.game.over = True    
+            self.game.over = True
 
     def render(self):
         #Rendering all the entities

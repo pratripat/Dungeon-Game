@@ -39,12 +39,19 @@ class Game:
         self.camera.set_target(self.entity_manager.player)
         self.camera.set_movement(0.05)
 
+        self.player_data = self.entity_manager.player.get_player_data()
+
     def load_level(self):
         self.over = False
         self.timer = Timer(self)
         self.tilemap = Tilemap(self.level_order[self.level])
 
         try:
+            self.player_data = self.entity_manager.player.get_player_data()
+
+            if self.player_data['health'] == 0:
+                self.player_data['health'] = self.entity_manager.player.max_health
+
             self.pause_menu.refresh()
             self.entity_manager.load_entities()
 
@@ -57,25 +64,25 @@ class Game:
         self.load_cutscene('game_begin')
         pygame.event.clear()
 
-    def update(self):
+    def update(self, player_movement=True, update_timer=True):
         #Fps
         self.clock.tick(100)
 
         #Updating the objects
         self.camera.update(self.tilemap)
         self.update_cutscene()
-        self.event_manager.update()
+        self.event_manager.update(player_movement=player_movement)
         self.entity_manager.update()
         self.pause_button.update()
 
-        if not self.entity_manager.player.dead:
+        if not self.entity_manager.player.dead and update_timer:
             self.timer.update()
 
         if self.over:
             self.load_cutscene('game_over', self.load_level)
 
-    def render(self):
-        self.renderer.render()
+    def render(self, update_screen=True, render_timer=True):
+        self.renderer.render(update_screen, render_timer)
 
     def main_loop(self):
         while True:

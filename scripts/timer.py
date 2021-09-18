@@ -1,7 +1,7 @@
 class Timer:
     def __init__(self, game):
         self.game = game
-        self.time = 100
+        self.time = 61
 
     #Renders time left before player dies
     def render(self):
@@ -17,6 +17,10 @@ class Timer:
     def update(self):
         if self.game.dt == 0 or 1/self.game.dt < 20:
             return
+
+        if self.game.entity_manager.player.coins == 50:
+            self.time += 10
+            self.game.entity_manager.player.coins = 0
 
         self.time -= self.game.dt
 

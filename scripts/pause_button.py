@@ -1,4 +1,5 @@
 import pygame
+from .funcs import *
 from .button import Button
 
 class Pause_Button(Button):
@@ -7,7 +8,4 @@ class Pause_Button(Button):
 
     @property
     def pause_button_image(self):
-        image = pygame.image.load('data/graphics/images/pause_button.png').convert()
-        image = pygame.transform.scale(image, (image.get_width()*3, image.get_height()*3))
-        image.set_colorkey((0, 0, 0))
-        return image
+        return load_image('data/graphics/images/pause_button.png', 3)

@@ -8,7 +8,7 @@ class Renderer:
         self.background_color = (37, 19, 26)
         self.ui_renderer = UI_Renderer(self.game)
 
-    def render(self):
+    def render(self, update_screen=True, render_timer=True):
         #Background color is rendered
         self.game.screen.fill(self.background_color)
 
@@ -20,12 +20,15 @@ class Renderer:
         #All entities are rendered
         self.game.entity_manager.render()
 
-        self.ui_renderer.render()
+        self.ui_renderer.render(render_timer)
 
         #Level transition rect is rendered
         self.game.level_transition_rect.render()
 
         # for rect in self.game.entity_manager.collidables:
         #     pygame.draw.rect(self.game.screen, (255,0,0), (rect[0]-self.game.camera.scroll[0], rect[1]-self.game.camera.scroll[1], rect[2], rect[3]))
+
+        if not update_screen:
+            return
 
         pygame.display.update()
