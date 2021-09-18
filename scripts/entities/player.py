@@ -4,14 +4,20 @@ from ..entity import Entity
 from ..health_bar import Health_Bar
 
 class Player(Entity):
-    def __init__(self, game, rect):
+    def __init__(self, game, rect, player_data={'health': 5, 'coins': 0}):
         super().__init__(game.animations, 'player', list(rect.topleft), 'idle')
         self.game = game
         self.target_position = self.position.copy()
         self.health_bar = Health_Bar(self.game, [30, 30])
         self.directions = {k:False for k in ['up', 'down', 'left', 'right']}
-        self.health = self.max_health = 5
-        self.coins = 0
+        self.max_health = 5
+        try:
+            self.health = self.game.player_data['health']
+            self.coins = self.game.player_data['coins']
+        except Exception as e:
+            print(e)
+            self.health = player_data['health']
+            self.coins = player_data['coins']
         self.speed = 4
         self.invincible_timer = 0
         self.bleeding_timer = 0
@@ -119,6 +125,12 @@ class Player(Entity):
 
     def instant_kill(self):
         self.health = 0
+
+    def get_player_data(self):
+        return {
+            'health': self.health,
+            'coins': self.coins
+        }
 
     @property
     def dead(self):
