@@ -26,4 +26,5 @@ class Door:
                 for entity in self.game.tilemap.entities:
                     if entity['position'] == list(self.rect.topleft) and entity['id'] == self.id:
                         self.game.tilemap.entities.remove(entity)
+                        self.game.sfx_manager.play_sfx('door_unlock')
                         break

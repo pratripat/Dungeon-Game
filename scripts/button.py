@@ -18,6 +18,7 @@ class Button:
         if not pygame.mouse.get_pressed()[0]:
             return False
 
+        self.game.sfx_manager.play_sfx('button_click')
         self.function(*self.args)
         return True
 

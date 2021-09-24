@@ -1,6 +1,8 @@
 [
   "data/levels/main_menu.json",
-  "data/levels/debug.json",
   "data/levels/1.json",
-  "data/levels/2.json"
+  "data/levels/2.json",
+  "data/levels/3.json",
+  "data/levels/4.json",
+  "data/levels/5.json",
 ]

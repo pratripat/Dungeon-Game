@@ -16,3 +16,4 @@ class Invincibility_Potion(Potion):
             self.game.entity_manager.player.increment_invincibility(10)
 
         self.game.entity_manager.invincibility_potions.remove(self)
+        self.game.sfx_manager.play_sfx('power_up')

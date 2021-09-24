@@ -111,6 +111,8 @@ class Player(Entity):
         self.damaged = True
         self.invincible_timer = 200
 
+        self.game.sfx_manager.play_sfx('damage')
+
     def bleed(self):
         self.bleeding_timer = self.max_bleeding_timer
 

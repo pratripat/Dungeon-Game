@@ -16,3 +16,4 @@ class Coin(Entity):
         if rect_rect_collision(self.rect, self.game.entity_manager.player.rect):
             self.game.entity_manager.coins.remove(self)
             self.game.entity_manager.player.coins += 1
+            self.game.sfx_manager.play_sfx('pickup')

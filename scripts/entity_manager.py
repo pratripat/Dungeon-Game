@@ -40,6 +40,8 @@ class Entity_Manager:
 
         if self.player.dead:
             self.game.over = True
+            self.game.music_manager.play_music('player_death')
+            self.game.music_manager.add_to_queue('main_music')
 
     def render(self):
         #Rendering all the entities

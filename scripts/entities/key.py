@@ -19,3 +19,4 @@ class Key:
             scale = self.animation.animation_data.config['scale']
             self.game.entity_manager.player.items[self.id] = pygame.transform.scale(image, (image.get_width()*scale, image.get_height()*scale))
             self.game.entity_manager.keys.remove(self)
+            self.game.sfx_manager.play_sfx('pickup')

@@ -4,11 +4,9 @@ from .funcs import *
 class UI_Renderer:
     def __init__(self, game):
         self.game = game
-        self.inventory_image = pygame.image.load('data/graphics/images/inventory.png').convert()
-        self.inventory_image = pygame.transform.scale(self.inventory_image, (self.inventory_image.get_width()*3, self.inventory_image.get_height()*3))
-        self.inventory_image.set_colorkey((0, 0, 0))
+        self.inventory_image = load_image('data/graphics/images/inventory.png', 3)
 
-    def render(self, render_timer=True):
+    def render(self, render_timer=True, pause_button=True):
         #Render health bar
         self.game.entity_manager.player.health_bar.render(self.game.entity_manager.player.health)
 
@@ -36,4 +34,5 @@ class UI_Renderer:
         self.game.font.render(self.game.screen, f'{self.game.entity_manager.player.coins:02d}', (self.game.screen.get_width()-100, 40), scale=3)
 
         #Render pause button
-        self.game.pause_button.render()
+        if pause_button:
+            self.game.pause_button.render()
