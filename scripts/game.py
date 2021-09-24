@@ -11,6 +11,12 @@ from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
 from .animation_handler import Animation_Handler
 from .level_transition_rect import Level_Transition_Rect
+from .sfx_manager import SFX_Manager
+from .music_manager import Music_Manager
+from .cursor import Cursor
+
+pygame.init()
+pygame.mouse.set_visible(False)
 
 class Game:
     def __init__(self):
@@ -25,6 +31,7 @@ class Game:
         self.load_level()
 
         #All important objects
+        self.cursor = Cursor(self)
         self.camera = Camera(self)
         self.renderer = Renderer(self)
         self.event_manager = Event_Manager(self)
@@ -34,6 +41,9 @@ class Game:
         self.level_transition_rect = Level_Transition_Rect(self)
         self.pause_menu = Pause_Menu(self)
         self.pause_button = Pause_Button(self)
+
+        self.sfx_manager = SFX_Manager(self)
+        self.music_manager = Music_Manager(self)
 
         #Sets player as the target
         self.camera.set_target(self.entity_manager.player)
@@ -64,7 +74,7 @@ class Game:
         self.load_cutscene('game_begin')
         pygame.event.clear()
 
-    def update(self, player_movement=True, update_timer=True):
+    def update(self, player_movement=True, update_timer=True, pause_button=True):
         #Fps
         self.clock.tick(100)
 
@@ -73,7 +83,9 @@ class Game:
         self.update_cutscene()
         self.event_manager.update(player_movement=player_movement)
         self.entity_manager.update()
-        self.pause_button.update()
+
+        if pause_button:
+            self.pause_button.update()
 
         if not self.entity_manager.player.dead and update_timer:
             self.timer.update()
@@ -81,10 +93,11 @@ class Game:
         if self.over:
             self.load_cutscene('game_over', self.load_level)
 
-    def render(self, update_screen=True, render_timer=True):
-        self.renderer.render(update_screen, render_timer)
+    def render(self, update_screen=True, render_timer=True, pause_button=True):
+        self.renderer.render(update_screen, render_timer, pause_button)
 
     def main_loop(self):
+        self.music_manager.play_music('main_music', -1)
         while True:
             self.update()
             self.render()

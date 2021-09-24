@@ -25,16 +25,18 @@ class Main_Menu:
 
     def render(self):
         self.game.camera.scroll[1] = self.game.tilemap.bottom-self.game.screen.get_height()+self.game.tilemap.RES
-        self.game.render(update_screen=False, render_timer=False)
+        self.game.render(update_screen=False, render_timer=False, pause_button=False)
         self.game.screen.blit(self.game_name_image, (self.game.screen.get_width()/2-self.game_name_image.get_width()/2, 100))
 
         for button in self.buttons:
             button.render()
 
+        self.game.cursor.render()
+
         pygame.display.update()
 
     def update(self):
-        self.game.update(player_movement=False, update_timer=False)
+        self.game.update(player_movement=False, update_timer=False, pause_button=False)
 
         for button in self.buttons:
             if button.update():

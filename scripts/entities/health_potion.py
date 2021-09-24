@@ -16,3 +16,4 @@ class Health_Potion(Potion):
             self.game.entity_manager.player.increment_health(2)
 
         self.game.entity_manager.health_potions.remove(self)
+        self.game.sfx_manager.play_sfx('power_up')
