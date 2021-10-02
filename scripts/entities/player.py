@@ -111,6 +111,7 @@ class Player(Entity):
         self.damaged = True
         self.invincible_timer = 200
 
+        self.game.camera.set_screen_shake(10, 30)
         self.game.sfx_manager.play_sfx('damage')
 
     def bleed(self):
