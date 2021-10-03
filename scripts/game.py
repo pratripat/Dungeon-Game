@@ -23,6 +23,7 @@ class Game:
     def __init__(self):
         self.window_size = (1000,700)
         self.screen = pygame.display.set_mode(self.window_size, pygame.RESIZABLE+pygame.SCALED)
+        pygame.display.set_caption('Dungeon master')
         self.clock = pygame.time.Clock()
 
         self.level = 0
@@ -150,7 +151,7 @@ class Game:
 
         self.player_data['coins'] = 0
         self.player_data['health'] = self.entity_manager.player.max_health
-        
+
         self.entity_manager = Entity_Manager(self)
 
         self.camera.set_target(self.entity_manager.player)
