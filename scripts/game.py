@@ -6,6 +6,7 @@ from .tilemap import Tilemap
 from .renderer import Renderer
 from .cutscene import Cutscene
 from .pause_menu import Pause_Menu
+from .end_menu import End_Menu
 from .pause_button import Pause_Button
 from .event_manager import Event_Manager
 from .entity_manager import Entity_Manager
@@ -27,6 +28,7 @@ class Game:
         self.level = 0
         self.level_order = json.load(open('data/configs/levels/level_order.json', 'r'))
         self.cutscene = None
+        self.end_level = False
 
         self.load_level()
 
@@ -41,6 +43,7 @@ class Game:
         self.level_transition_rect = Level_Transition_Rect(self)
         self.pause_menu = Pause_Menu(self)
         self.pause_button = Pause_Button(self)
+        self.end_menu = End_Menu(self)
 
         self.sfx_manager = SFX_Manager(self)
         self.music_manager = Music_Manager(self)
@@ -54,7 +57,12 @@ class Game:
     def load_level(self):
         self.over = False
         self.timer = Timer(self)
-        self.tilemap = Tilemap(self.level_order[self.level])
+
+        try:
+            self.tilemap = Tilemap(self.level_order[self.level])
+        except:
+            self.tilemap = Tilemap('data/levels/end.json')
+            self.end_level = True
 
         try:
             self.player_data = self.entity_manager.player.get_player_data()
@@ -71,7 +79,11 @@ class Game:
             pass
 
         #First cutscene (black rect moving)
-        self.load_cutscene('game_begin')
+        if self.end_level:
+            self.load_cutscene('game_begin', self.end_menu.load)
+        else:
+            self.load_cutscene('game_begin')
+
         pygame.event.clear()
 
     def update(self, player_movement=True, update_timer=True, pause_button=True):
@@ -83,6 +95,7 @@ class Game:
         self.update_cutscene()
         self.event_manager.update(player_movement=player_movement)
         self.entity_manager.update()
+        self.end_menu.run()
 
         if pause_button:
             self.pause_button.update()
@@ -97,8 +110,9 @@ class Game:
         self.renderer.render(update_screen, render_timer, pause_button)
 
     def main_loop(self):
+        self.running = True
         self.music_manager.play_music('main_music', -1)
-        while True:
+        while self.running:
             self.update()
             self.render()
 
@@ -123,6 +137,26 @@ class Game:
         data = json.load(open(f'data/cutscenes/{path}.json', 'r'))
         self.cutscene = Cutscene(self, data['sequential_commands'], data['independent_commands'], function, args)
         self.over = False
+
+    def set_running(self, bool):
+        self.running = bool
+
+    def reset(self):
+        self.level = 0
+        self.end_level = False
+
+        self.tilemap = Tilemap(self.level_order[self.level])
+        self.pause_menu.refresh()
+
+        self.player_data['coins'] = 0
+        self.player_data['health'] = self.entity_manager.player.max_health
+        
+        self.entity_manager = Entity_Manager(self)
+
+        self.camera.set_target(self.entity_manager.player)
+        self.camera.set_movement(0.05)
+
+        self.music_manager.stop()
 
     @property
     def dt(self):

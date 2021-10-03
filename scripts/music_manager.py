@@ -46,3 +46,6 @@ class Music_Manager:
         else:
             pygame.mixer.music.unpause()
             self.volume = 1
+
+    def stop(self):
+        pygame.mixer.music.stop()        
