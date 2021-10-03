@@ -48,5 +48,4 @@ class Main_Menu:
             self.render()
 
     def refresh(self):
-        self.running = False
         pygame.event.clear()

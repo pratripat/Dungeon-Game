@@ -29,9 +29,7 @@ class Renderer:
         # for rect in self.game.entity_manager.collidables:
         #     pygame.draw.rect(self.game.screen, (255,0,0), (rect[0]-self.game.camera.scroll[0], rect[1]-self.game.camera.scroll[1], rect[2], rect[3]))
 
-        if not update_screen:
-            return
+        if update_screen:
+            self.game.cursor.render()
 
-        self.game.cursor.render()        
-
-        pygame.display.update()
+            pygame.display.update()
